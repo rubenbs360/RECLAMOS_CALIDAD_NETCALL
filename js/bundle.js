@@ -855,8 +855,8 @@ window.ChartManager = {
 
   getTooltipTheme() {
     return {
-      backgroundColor: 'rgba(15, 23, 42, 0.92)',
-      borderColor: '#334155',
+      backgroundColor: 'rgba(14, 46, 103, 0.95)',
+      borderColor: '#3B5E96',
       borderWidth: 1,
       padding: [8, 12],
       textStyle: {
@@ -934,14 +934,14 @@ window.ChartManager = {
         barWidth: 9,
         z: 3,
         itemStyle: {
-          color: '#1E3A8A',
+          color: '#0E2E67',
           borderRadius: 2
         },
         label: {
           show: true,
           position: 'right',
           formatter: '{c} %',
-          color: '#0F172A',
+          color: '#0E2E67',
           fontSize: 10,
           fontWeight: 700
         }
@@ -955,7 +955,7 @@ window.ChartManager = {
           return {
             value: basePcts[idx],
             itemStyle: {
-              color: isSelected ? '#1E3A8A' : '#4B6B94',
+              color: isSelected ? '#0E2E67' : '#0D6ABF',
               opacity: isDimmed ? 0.25 : 1,
               borderRadius: 2
             }
@@ -966,7 +966,7 @@ window.ChartManager = {
           show: true,
           position: 'right',
           formatter: '{c} %',
-          color: '#1E293B',
+          color: '#1A3B78',
           fontSize: 10,
           fontWeight: 600
         }
@@ -993,7 +993,7 @@ window.ChartManager = {
         axisLine: { show: false },
         axisTick: { show: false },
         axisLabel: {
-          color: (val) => (isSameFieldCF && cf.value === val) ? '#0F172A' : '#64748B',
+          color: (val) => (isSameFieldCF && cf.value === val) ? '#0E2E67' : '#64748B',
           fontWeight: (val) => (isSameFieldCF && cf.value === val) ? 800 : 600,
           fontSize: 10
         }
@@ -1060,14 +1060,14 @@ window.ChartManager = {
         barWidth: 10,
         z: 3,
         itemStyle: {
-          color: '#E05D26',
+          color: '#E64A00',
           borderRadius: 2
         },
         label: {
           show: true,
           position: 'right',
           formatter: '{c} %',
-          color: '#1E293B',
+          color: '#1A3B78',
           fontSize: 10,
           fontWeight: 700
         }
@@ -1081,7 +1081,7 @@ window.ChartManager = {
           return {
             value: t.pct,
             itemStyle: {
-              color: isSelected ? '#C2410C' : '#FA6400',
+              color: isSelected ? '#C2410C' : '#E64A00',
               opacity: isDimmed ? 0.25 : 1,
               borderColor: isSelected ? '#7C2D12' : 'transparent',
               borderWidth: isSelected ? 1.5 : 0,
@@ -1094,7 +1094,7 @@ window.ChartManager = {
           show: true,
           position: 'right',
           formatter: '{c} %',
-          color: '#1E293B',
+          color: '#1A3B78',
           fontSize: 10,
           fontWeight: 700
         }
@@ -1165,7 +1165,7 @@ window.ChartManager = {
       return {
         value: val,
         itemStyle: {
-          color: isSelected ? '#1E3A8A' : '#2563EB',
+          color: isSelected ? '#0E2E67' : '#0D6ABF',
           opacity: isDimmed ? 0.25 : 1,
           borderRadius: [2, 2, 0, 0]
         }
@@ -1202,7 +1202,7 @@ window.ChartManager = {
         triggerEvent: true,
         axisLine: { lineStyle: { color: '#CBD5E1' } },
         axisLabel: {
-          color: (val) => (cf && cf.field === 'campana' && cf.value === val) ? '#0F172A' : '#475569',
+          color: (val) => (cf && cf.field === 'campana' && cf.value === val) ? '#0E2E67' : '#475569',
           fontWeight: (val) => (cf && cf.field === 'campana' && cf.value === val) ? 800 : 500,
           fontSize: 9,
           interval: 0,
@@ -1217,7 +1217,7 @@ window.ChartManager = {
           max: 100,
           interval: 20,
           axisLabel: { formatter: '{value}%', color: '#64748B', fontSize: 9 },
-          splitLine: { show: true, lineStyle: { type: 'dashed', color: '#F1F5F9' } }
+          splitLine: { show: true, lineStyle: { type: 'dashed', color: '#F7F9F8' } }
         }
       ],
       series: [
@@ -1229,7 +1229,7 @@ window.ChartManager = {
           label: {
             show: true,
             position: 'top',
-            color: '#1E293B',
+            color: '#1A3B78',
             fontSize: 9,
             fontWeight: 700,
             formatter: (p) => {
@@ -1245,8 +1245,8 @@ window.ChartManager = {
           data: pctValues,
           symbol: 'circle',
           symbolSize: 6,
-          itemStyle: { color: '#FA6400' },
-          lineStyle: { width: 2.5, color: '#FA6400' },
+          itemStyle: { color: '#E64A00' },
+          lineStyle: { width: 2.5, color: '#E64A00' },
           label: {
             show: true,
             position: 'top',
@@ -1291,11 +1291,11 @@ window.ChartManager = {
 
       fundadoPcts.push({
         value: fPct,
-        itemStyle: { color: '#4271B3', opacity: isDimmed ? 0.28 : 1 }
+        itemStyle: { color: '#0D6ABF', opacity: isDimmed ? 0.28 : 1 }
       });
       infundadoPcts.push({
         value: infPct,
-        itemStyle: { color: '#E05D26', opacity: isDimmed ? 0.28 : 1 }
+        itemStyle: { color: '#E64A00', opacity: isDimmed ? 0.28 : 1 }
       });
     });
 
@@ -1382,11 +1382,11 @@ window.ChartManager = {
 
       fundados.push({
         value: tot > 0 ? +( (f / tot) * 100 ).toFixed(2) : 0,
-        itemStyle: { color: '#4271B3', opacity: isDimmed ? 0.28 : 1 }
+        itemStyle: { color: '#0D6ABF', opacity: isDimmed ? 0.28 : 1 }
       });
       infundados.push({
         value: tot > 0 ? +( (inf / tot) * 100 ).toFixed(2) : 0,
-        itemStyle: { color: '#E05D26', opacity: isDimmed ? 0.28 : 1 }
+        itemStyle: { color: '#E64A00', opacity: isDimmed ? 0.28 : 1 }
       });
     });
 
@@ -1472,11 +1472,11 @@ window.ChartManager = {
 
       fundados.push({
         value: tot > 0 ? +( (f / tot) * 100 ).toFixed(2) : 0,
-        itemStyle: { color: '#4271B3', opacity: isDimmed ? 0.28 : 1 }
+        itemStyle: { color: '#0D6ABF', opacity: isDimmed ? 0.28 : 1 }
       });
       infundados.push({
         value: tot > 0 ? +( (inf / tot) * 100 ).toFixed(2) : 0,
-        itemStyle: { color: '#E05D26', opacity: isDimmed ? 0.28 : 1 }
+        itemStyle: { color: '#E64A00', opacity: isDimmed ? 0.28 : 1 }
       });
     });
 
@@ -1611,7 +1611,7 @@ window.ChartManager = {
           show: true,
           position: 'right',
           formatter: (p) => `${p.value} (${fgPcts[p.dataIndex]}${suffixText})`,
-          color: '#0F172A',
+          color: '#0E2E67',
           fontSize: 9.5,
           fontWeight: 700
         }
@@ -1639,7 +1639,7 @@ window.ChartManager = {
             const v = typeof p.value === 'object' ? p.value.value : p.value;
             return `${v} (${fgPcts[p.dataIndex]}${suffixText})`;
           },
-          color: '#1E293B',
+          color: '#1A3B78',
           fontSize: 9.5,
           fontWeight: 600
         }
@@ -1669,7 +1669,7 @@ window.ChartManager = {
         axisLine: { show: false },
         axisTick: { show: false },
         axisLabel: {
-          color: (val) => (isSameFieldCF && cf.value === val) ? '#0F172A' : '#64748B',
+          color: (val) => (isSameFieldCF && cf.value === val) ? '#0E2E67' : '#64748B',
           fontWeight: (val) => (isSameFieldCF && cf.value === val) ? 800 : 600,
           fontSize: 9.5
         }
@@ -1736,7 +1736,7 @@ window.ChartManager = {
           show: true,
           position: 'right',
           formatter: '{c}',
-          color: '#1E293B',
+          color: '#1A3B78',
           fontSize: 9.5,
           fontWeight: 700
         }
@@ -1750,7 +1750,7 @@ window.ChartManager = {
           return {
             value: stat.baseTotal,
             itemStyle: {
-              color: isSelected ? '#C2410C' : '#FA6400',
+              color: isSelected ? '#C2410C' : '#E64A00',
               opacity: isDimmed ? 0.25 : 1,
               borderRadius: 2
             }
@@ -1765,7 +1765,7 @@ window.ChartManager = {
             const tot = baseData.length || 1;
             return `${v} (${Math.round((v / tot) * 100)}%)`;
           },
-          color: '#1E293B',
+          color: '#1A3B78',
           fontSize: 9.5,
           fontWeight: 700
         }
@@ -1831,7 +1831,7 @@ window.ChartManager = {
       return {
         value: val,
         itemStyle: {
-          color: isSelected ? '#1E3A8A' : '#2563EB',
+          color: isSelected ? '#0E2E67' : '#0D6ABF',
           opacity: isDimmed ? 0.25 : 1,
           borderRadius: [2, 2, 0, 0]
         }
@@ -1864,7 +1864,7 @@ window.ChartManager = {
         triggerEvent: true,
         axisLine: { lineStyle: { color: '#CBD5E1' } },
         axisLabel: {
-          color: (val) => (isSameFieldCF && cf.value === val) ? '#0F172A' : '#475569',
+          color: (val) => (isSameFieldCF && cf.value === val) ? '#0E2E67' : '#475569',
           fontWeight: (val) => (isSameFieldCF && cf.value === val) ? 800 : 500,
           fontSize: 8.5,
           interval: 0,
@@ -1880,7 +1880,7 @@ window.ChartManager = {
           max: 100,
           interval: 25,
           axisLabel: { formatter: '{value}%', color: '#64748B', fontSize: 8.5 },
-          splitLine: { show: true, lineStyle: { type: 'dashed', color: '#F1F5F9' } }
+          splitLine: { show: true, lineStyle: { type: 'dashed', color: '#F7F9F8' } }
         }
       ],
       series: [
@@ -1889,7 +1889,7 @@ window.ChartManager = {
           type: 'bar',
           data: qValues,
           barWidth: 22,
-          label: { show: true, position: 'top', color: '#1E293B', fontSize: 9, fontWeight: 700 }
+          label: { show: true, position: 'top', color: '#1A3B78', fontSize: 9, fontWeight: 700 }
         },
         {
           name: '%',
@@ -1898,8 +1898,8 @@ window.ChartManager = {
           data: pctValues,
           symbol: 'circle',
           symbolSize: 5,
-          itemStyle: { color: '#FA6400' },
-          lineStyle: { width: 2, color: '#FA6400' },
+          itemStyle: { color: '#E64A00' },
+          lineStyle: { width: 2, color: '#E64A00' },
           label: {
             show: true,
             position: 'top',
@@ -1965,7 +1965,7 @@ window.ChartManager = {
             return {
               value: val,
               itemStyle: {
-                color: k === 'TELCEL' ? '#0284C7' : (k === 'ALTAN' ? '#FA6400' : '#6366F1'),
+                color: k === 'TELCEL' ? '#0284C7' : (k === 'ALTAN' ? '#E64A00' : '#6366F1'),
                 opacity: isDimmed ? 0.25 : 1,
                 borderRadius: 3
               }
@@ -1980,7 +1980,7 @@ window.ChartManager = {
             },
             fontSize: 9,
             fontWeight: 700,
-            color: '#0F172A'
+            color: '#0E2E67'
           }
         }
       ]
@@ -2051,7 +2051,7 @@ window.ChartManager = {
             },
             fontSize: 9.5,
             fontWeight: 700,
-            color: '#0F172A'
+            color: '#0E2E67'
           }
         }
       ]

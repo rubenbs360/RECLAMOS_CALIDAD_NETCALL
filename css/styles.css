@@ -9,45 +9,45 @@
 
 
 :root {
-
-  --bg-app: #F1F5F9;
-
+  /* ========================================================
+     TEMA NETCALL PERÚ - ATON BI
+     ======================================================== */
+  --bg-app: #F7F9F8;
   --bg-card: #FFFFFF;
 
-  --entel-blue: #0A2540;
+  /* Paleta Corporativa Oficial */
+  --netcall-navy: #0E2E67;
+  --netcall-navy-sub: #1A3B78;
+  --netcall-orange: #E64A00;
+  --netcall-blue-mid: #0D6ABF;
+  --netcall-blue-light: #41A4FF;
+  --netcall-navy-muted: #3B5E96;
+  --netcall-slate: #627EAB;
+  --netcall-ice: #A3B5D1;
 
-  --entel-navy: #0F172A;
-
-  --entel-orange: #FA6400;
-
-  --accent-blue: #2563EB;
-
-  --accent-cyan: #06B6D4;
+  --entel-blue: #0E2E67;
+  --entel-navy: #0E2E67;
+  --entel-orange: #E64A00;
+  --accent-blue: #0D6ABF;
+  --accent-cyan: #41A4FF;
 
   --border-color: #E2E8F0;
-
   --border-subtle: #CBD5E1;
 
-  --text-dark: #0F172A;
+  --text-dark: #0E2E67;
+  --text-muted: #627EAB;
+  --text-light: #A3B5D1;
 
-  --text-muted: #64748B;
+  --th-bg: #0E2E67;
+  --th-sub-bg: #1A3B78;
 
-  --text-light: #94A3B8;
+  --fundado-color: #0D6ABF;
+  --infundado-color: #E64A00;
 
-  --th-bg: #0F172A;
-
-  --th-sub-bg: #1E293B;
-
-  --fundado-color: #FA6400;
-
-  --infundado-color: #2563EB;
-
-  --total-col-bg: #F8FAFC;
+  --total-col-bg: #F7F9F8;
 
   --header-height: 56px;
-
   --filter-height: 48px;
-
 }
 
 
@@ -156,7 +156,7 @@ html, body {
 
 .landing-left {
 
-  background: linear-gradient(180deg, #0F172A 0%, #020617 100%);
+  background: linear-gradient(160deg, #0E2E67 0%, #081F47 100%);
 
   color: #FFFFFF;
 
@@ -526,7 +526,7 @@ html, body {
 
 .status-badge.soon {
 
-  background: #F1F5F9;
+  background: #F7F9F8;
 
   color: #64748B;
 
@@ -594,7 +594,7 @@ html, body {
 
 /* ========================================================
 
-   VISTA 2: HEADER CORPORATIVO (bg-slate-900 / #0F172A FIJO)
+   VISTA 2: HEADER CORPORATIVO (bg-slate-900 / #0E2E67 FIJO)
 
    ======================================================== */
 
@@ -604,7 +604,7 @@ header.app-header, .dashboard-header {
 
   width: 100%;
 
-  background-color: #0F172A !important;
+  background-color: #0E2E67 !important; border-bottom: 2px solid #E64A00 !important;
 
   color: #FFFFFF !important;
 
@@ -820,7 +820,7 @@ header.app-header, .dashboard-header {
 
   background: #FFFFFF;
 
-  color: #0F172A !important;
+  color: #0E2E67 !important;
 
   font-weight: 700;
 
@@ -1060,7 +1060,7 @@ header.app-header, .dashboard-header {
 
   gap: 5px;
 
-  background: #F1F5F9;
+  background: #F7F9F8;
 
   border: 1px solid #E2E8F0;
 
@@ -1208,7 +1208,7 @@ header.app-header, .dashboard-header {
 
   background: #FFFFFF;
 
-  border-bottom: 1px solid #F1F5F9;
+  border-bottom: 1px solid #F7F9F8;
 
   display: flex;
 
@@ -1270,11 +1270,11 @@ header.app-header, .dashboard-header {
 
 .bar-dot { background: #1E40AF; }
 
-.line-dot { background: #FA6400; border-radius: 50%; }
+.line-dot { background: #E64A00; border-radius: 50%; }
 
-.fundado-dot { background: #2563EB; }
+.fundado-dot { background: #0D6ABF; }
 
-.infundado-dot { background: #FA6400; }
+.infundado-dot { background: #E64A00; }
 
 
 
@@ -1443,7 +1443,7 @@ header.app-header, .dashboard-header {
 .bi-table tbody td:first-child {
   text-align: left;
   font-weight: 600;
-  color: #0F172A;
+  color: #0E2E67;
   position: static;
   padding-left: 8px;
 }
@@ -1460,7 +1460,7 @@ header.app-header, .dashboard-header {
 
 .bi-table tbody tr:hover td:first-child {
 
-  background: #F1F5F9;
+  background: #F7F9F8;
 
 }
 
@@ -1472,7 +1472,7 @@ header.app-header, .dashboard-header {
 
   font-weight: 700;
 
-  color: #002244;
+  color: #0E2E67;
 
   border-top: 2px solid #94A3B8;
 
@@ -1658,7 +1658,7 @@ header.app-header, .dashboard-header {
 
 .btn-dim-tool {
 
-  background: #F1F5F9;
+  background: #F7F9F8;
 
   border: 1px solid #CBD5E1;
 
@@ -1672,7 +1672,7 @@ header.app-header, .dashboard-header {
 
   font-weight: 700;
 
-  color: #1E293B;
+  color: #1A3B78;
 
   cursor: pointer;
 
@@ -1740,7 +1740,7 @@ header.app-header, .dashboard-header {
 
 .dim-item:hover {
 
-  background: #F1F5F9;
+  background: #F7F9F8;
 
   border-color: #CBD5E1;
 
@@ -1824,7 +1824,7 @@ header.app-header, .dashboard-header {
 
   background: #E2E8F0;
 
-  color: #0F172A;
+  color: #0E2E67;
 
 }
 
@@ -1854,7 +1854,7 @@ header.app-header, .dashboard-header {
 
   background: #FFFFFF;
 
-  color: #1E293B;
+  color: #1A3B78;
 
   border-radius: 2px;
 
@@ -2040,7 +2040,7 @@ header.app-header, .dashboard-header {
 
   right: 20px;
 
-  background: #1E293B;
+  background: #1A3B78;
 
   color: #FFFFFF;
 
@@ -2130,7 +2130,7 @@ header.app-header, .dashboard-header {
   position: sticky !important;
   top: 0 !important;
   z-index: 5 !important;
-  background: #0F172A !important;
+  background: #0E2E67 !important;
   color: #FFFFFF !important;
   font-weight: 600 !important;
   text-align: center !important;
@@ -2151,7 +2151,7 @@ header.app-header, .dashboard-header {
 
 /* Sub-columnas del header (Q, %) */
 .bi-table thead .sub-cols th {
-  background: #1E293B !important;
+  background: #1A3B78 !important;
   top: 19px !important;
   font-size: 0.62rem !important;
   padding: 2px 1px !important;
@@ -2162,7 +2162,7 @@ header.app-header, .dashboard-header {
 .bi-table td.col-nombre {
   text-align: left !important;
   font-weight: 600 !important;
-  color: #0F172A !important;
+  color: #0E2E67 !important;
   padding-left: 6px !important;
   padding-right: 2px !important;
   overflow: hidden !important;
@@ -2192,7 +2192,7 @@ header.app-header, .dashboard-header {
 .bi-table tbody tr.row-total td {
   background: #EBF3FF !important;
   font-weight: 700 !important;
-  color: #002244 !important;
+  color: #0E2E67 !important;
   border-top: 2px solid #94A3B8 !important;
 }
 .bi-table tbody tr.row-total td.col-nombre {
@@ -2312,7 +2312,7 @@ header.app-header, .dashboard-header {
   border-radius: 4px !important;
   border: 1px solid #CBD5E1 !important;
   background: #F8FAFC !important;
-  color: #0F172A !important;
+  color: #0E2E67 !important;
   outline: none !important;
   height: 24px !important;
 }
@@ -2372,8 +2372,8 @@ header.app-header, .dashboard-header {
   vertical-align: middle !important;
 }
 
-.dot-fundado { background: #4271B3 !important; }
-.dot-infundado { background: #E05D26 !important; }
+.dot-fundado { background: #0D6ABF !important; }
+.dot-infundado { background: #E64A00 !important; }
 
 /* Ocultar barra superior en Detalle para que coincida con PBI */
 #tab-detalle.active ~ .filter-bar,
@@ -2398,7 +2398,7 @@ header.app-header, .dashboard-header {
   height: 28px !important;
   max-height: 28px !important;
   line-height: 1.2 !important;
-  background: #0F172A !important;
+  background: #0E2E67 !important;
   z-index: 10 !important;
   box-sizing: border-box !important;
   padding: 4px 6px !important;
@@ -2423,7 +2423,7 @@ header.app-header, .dashboard-header {
   height: 22px !important;
   max-height: 22px !important;
   line-height: 1 !important;
-  background: #1E293B !important;
+  background: #1A3B78 !important;
   z-index: 9 !important;
   box-sizing: border-box !important;
   padding: 3px 2px !important;
@@ -2470,7 +2470,7 @@ header.app-header, .dashboard-header {
   border-radius: 6px;
   padding: 4px 10px;
   font-size: 0.78rem;
-  color: #1E293B;
+  color: #1A3B78;
   font-weight: 500;
   background-color: #F8FAFC;
   cursor: pointer;
@@ -2488,12 +2488,12 @@ header.app-header, .dashboard-header {
 
 .ms-trigger:hover,
 .ms-dropdown.open .ms-trigger {
-  border-color: #2563EB;
+  border-color: #0D6ABF;
   background-color: #FFFFFF;
 }
 
 .ms-dropdown.has-selection .ms-trigger {
-  border-color: #FA6400;
+  border-color: #E64A00;
   background-color: #FFF7ED;
   color: #C2410C;
   font-weight: 600;
@@ -2565,14 +2565,14 @@ header.app-header, .dashboard-header {
   gap: 8px;
   padding: 5px 10px;
   font-size: 0.74rem;
-  color: #1E293B;
+  color: #1A3B78;
   cursor: pointer;
   transition: background 0.1s;
   user-select: none;
 }
 
 .ms-item:hover {
-  background: #F1F5F9;
+  background: #F7F9F8;
 }
 
 .ms-item.checked {
@@ -2583,12 +2583,12 @@ header.app-header, .dashboard-header {
 
 .ms-item-all {
   font-weight: 700;
-  color: #0F172A;
+  color: #0E2E67;
   padding: 2px 4px;
 }
 
 .ms-item input[type="checkbox"] {
-  accent-color: #FA6400;
+  accent-color: #E64A00;
   width: 14px;
   height: 14px;
   cursor: pointer;
@@ -2646,7 +2646,7 @@ header.app-header, .dashboard-header {
 
 .mov-chart-toggle {
   display: inline-flex;
-  background: #F1F5F9;
+  background: #F7F9F8;
   border: 1px solid #E2E8F0;
   border-radius: 5px;
   padding: 2px;
@@ -2667,7 +2667,7 @@ header.app-header, .dashboard-header {
 }
 
 .mov-chart-btn:hover {
-  color: #0F172A;
+  color: #0E2E67;
 }
 
 .mov-chart-btn.active {
@@ -2723,7 +2723,7 @@ header.app-header, .dashboard-header {
 .mov-kpi-val {
   font-size: 1.05rem;
   font-weight: 800;
-  color: #0F172A;
+  color: #0E2E67;
   line-height: 1.1;
 }
 
@@ -2809,7 +2809,7 @@ header.app-header, .dashboard-header {
 .mk-val.blue { color: #0284C7; }
 .mk-val.green { color: #15803D; }
 .mk-val.orange { color: #EA580C; }
-.mk-val.slate { color: #0F172A; }
+.mk-val.slate { color: #0E2E67; }
 
 .mk-sub {
   font-size: 0.58rem;
@@ -2834,7 +2834,7 @@ header.app-header, .dashboard-header {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4px;
-  background: #F1F5F9;
+  background: #F7F9F8;
   padding: 3px;
   border-radius: 6px;
   margin-bottom: 2px;
