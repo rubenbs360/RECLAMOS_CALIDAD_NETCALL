@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BI DE RECLAMOS CLIENTES - NETCALL PERÚ</title>
+
+  <!-- Google Fonts: Inter -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Apache ECharts -->
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+
+  <!-- Supabase JS Client -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Lucide Icons -->
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Styles -->
+
+  <link rel="stylesheet" href="css/styles.css?v=639294239511884802">
+
+</head>
+
+<body>
+
+  <!-- LOADING OVERLAY -->
+
+  <div id="loading-overlay" class="loading-overlay">
+
+    <div class="loader-content">
+
+      <div class="spinner"></div>
+
+      <h3 id="loader-title">Cargando BI de Reclamos...</h3>
+
+      <p id="loader-sub">Sincronizando Google Sheets y Supabase</p>
+
+    </div>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+
+  <div id="toast" class="toast"></div>
+
+  <!-- MAIN APP CONTAINER (100vh / No Scroll) -->
+
+  <div id="app" class="app-container">
+
+    
+
+    <!-- ==================== VIEW 1: LANDING / SELECTOR ==================== -->
+
+    <section id="view-landing" class="view-section active">
+
+      <div class="landing-container">
+
+        <!-- Columna Izquierda Azul -->
+
+        <div class="landing-left">
+
+          <div class="brand-badge">
+
+            <div class="brand-icon">
+
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+
+              </svg>
+
+            </div>
+
+            <span class="brand-name">NETCALL PERÚ</span>
+
+          </div>
+
+          <div class="landing-hero">
+
+            <p class="hero-tag">GESTIÓN DE EXPERIENCIA & ATENCIÓN</p>
+
+            <h1 class="hero-title">BI DE RECLAMOS<br>CLIENTES</h1>
+
+            <div class="hero-bar"></div>
+
+            <p class="hero-desc">
+
+              Monitoreo, clasificación y trazabilidad integral de reclamos presentados por clientes de las diferentes campañas.
+
+            </p>
+
+          </div>
+
+          <div class="landing-footer">
+
+            <span class="footer-label">ÚLTIMA ACTUALIZACIÓN</span>
+
+            <span id="landing-timestamp" class="footer-val">Sincronizando...</span>
+
+          </div>
+
+        </div>
+
+        <!-- Columna Derecha de Campañas -->
+
+        <div class="landing-right">
+
+          <div class="cards-wrapper">
+
+            <!-- Tarjeta ENTEL (Activa) -->
+
+            <div class="campaign-card card-entel" id="btn-entel">
+
+              <div class="card-glow entel-glow"></div>
+
+              <div class="card-icon-box entel-icon">
+
+                <i data-lucide="zap"></i>
+
+              </div>
+
+              <div class="card-body">
+
+                <div class="card-header-row">
+
+                  <span class="card-tag">CAMPAÑA</span>
+
+                  <span class="status-badge live">ACTIVO</span>
+
+                </div>
+
+                <h2 class="card-title">ENTEL</h2>
+
+                <p class="card-text">
+
+                  Auditoría de reclamos, seguimiento diario, escalera de ofrecimiento y gestión de reincidencia.
+
+                </p>
+
+              </div>
+
+              <div class="card-arrow">
+
+                <i data-lucide="arrow-right"></i>
+
+              </div>
+
+            </div>
+
+            <!-- Tarjeta MOVISTAR (Próximamente) -->
+
+            <!-- Tarjeta MOVISTAR (Activa) -->
+            <div class="campaign-card card-movistar" id="btn-movistar">
+              <div class="card-glow movistar-glow"></div>
+              <div class="card-icon-box movistar-icon">
+                <i data-lucide="arrow-left-right"></i>
+              </div>
+              <div class="card-body">
+                <div class="card-header-row">
+                  <span class="card-tag">CAMPAÑA</span>
+                  <span class="status-badge live">ACTIVO</span>
+                </div>
+                <h2 class="card-title">MOVISTAR</h2>
+                <p class="card-text">
+                  Gestión unificada de reclamos, requerimientos operativos y seguimiento de casos.
+                </p>
+                <div class="tag-chip">Tripletas y Reversas</div>
+              </div>
+              <div class="card-arrow">
+                <i data-lucide="arrow-right"></i>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 2: DASHBOARD (PORTADA / DETALLE / REINCIDENCIA) ==================== -->
+
+    <section id="view-dashboard" class="view-section">
+
+      <!-- Top Navigation Bar -->
+
+      <header class="app-header">
+
+        <div class="header-left">
+
+          <div class="header-logo" id="btn-back-home" title="Volver al selector de campañas">
+
+            <div class="logo-box">
+
+              <i data-lucide="bar-chart-2"></i>
+
+            </div>
+
+            <div class="logo-text">
+
+              <span class="logo-title">Netcall</span>
+
+              <span class="logo-sub">GROUP</span>
+
+            </div>
+
+          </div>
+
+          <div class="header-divider"></div>
+
+          <div class="header-breadcrumb" id="header-breadcrumb">
+
+            PORTADA - RECLAMOS
+
+          </div>
+
+        </div>
+
+        <!-- Pestañas Superiores -->
+
+        <nav class="nav-tabs" id="main-nav-tabs">
+          <button class="nav-tab entel-tab active" data-tab="portada">Portada</button>
+          <button class="nav-tab entel-tab" data-tab="detalle">Detalle</button>
+          <button class="nav-tab entel-tab" data-tab="reincidencia">Reincidencia</button>
+          <button class="nav-tab movistar-tab" data-tab="mov-portada" style="display:none;">Portada - Tripletas</button>
+          <button class="nav-tab movistar-tab" data-tab="mov-reversas" style="display:none;">Reversas &amp; Matriz</button>
+        </nav>
+
+        <!-- Segmentador de Año y Botón Refresh -->
+
+        <div class="header-right">
+
+          <div class="year-pills" id="year-slicers">
+
+            <button class="year-btn" data-year="2023">2023</button>
+
+            <button class="year-btn" data-year="2024">2024</button>
+
+            <button class="year-btn active" data-year="2025">2025</button>
+
+            <button class="year-btn" data-year="2026">2026</button>
+
+          </div>
+
+          <button id="btn-refresh" class="btn-icon" title="Refrescar datos en vivo">
+
+            <i data-lucide="refresh-cw"></i>
+
+          </button>
+
+        </div>
+
+      </header>
+
+      <!-- Global Filter Bar (Dropdowns en Cascada) -->
+
+      <div class="filter-bar">
+        <div class="filter-item" id="filter-campana-wrap">
+          <label id="lbl-filter-campana">Campaña</label>
+          <select id="filter-campana" class="form-select">
+            <option value="ALL">Todas</option>
+          </select>
+        </div>
+        <div class="filter-item" id="filter-estado-wrap">
+          <label id="lbl-filter-estado">Estado</label>
+          <select id="filter-estado" class="form-select">
+            <option value="ALL">Todas</option>
+          </select>
+        </div>
+        <div class="filter-item" id="filter-responsabilidad-wrap">
+          <label id="lbl-filter-responsabilidad">Responsabilidad</label>
+          <select id="filter-responsabilidad" class="form-select">
+            <option value="ALL">Todas</option>
+          </select>
+        </div>
+        <div class="filter-item" id="filter-respuesta-wrap" style="display:none;">
+          <label id="lbl-filter-respuesta">Respuesta</label>
+          <select id="filter-respuesta" class="form-select">
+            <option value="ALL">Todas</option>
+          </select>
+        </div>
+        <div class="filter-item" id="filter-mes-wrap">
+          <label id="lbl-filter-mes">Mes</label>
+          <select id="filter-mes" class="form-select">
+            <option value="ALL">Todas</option>
+          </select>
+        </div>
+
+        <div class="filter-actions">
+
+          <button id="btn-reset-filters" class="btn-reset" title="Restablecer filtros">
+
+            <i data-lucide="filter-x"></i> Limpiar Filtros
+
+          </button>
+
+          <span class="active-records-badge" id="records-counter">0 registros</span>
+
+        </div>
+
+      </div>
+
+      <!-- Main Dashboard Grid Content (100vh / No Scroll) -->
+
+      <main class="dashboard-viewport">
+
+        <!-- TAB 1: PORTADA -->
+
+        <div id="tab-portada" class="tab-pane active">
+
+          <div class="portada-grid">
+
+            <!-- Row 1: Gráficos principales -->
+
+            <div class="card-chart">
+
+              <div class="card-header">
+
+                <span class="title">Reclamos Fundados por Mes</span>
+
+              </div>
+
+              <div class="chart-box" id="chart-fundados-mes"></div>
+
+            </div>
+
+            <div class="card-chart">
+
+              <div class="card-header">
+
+                <span class="title">Top 5 - Reclamos Fundados</span>
+
+              </div>
+
+              <div class="chart-box" id="chart-top5-fundados"></div>
+
+            </div>
+
+            <div class="card-chart combo-card">
+
+              <div class="card-header">
+
+                <span class="title">Reclamos Fundados por Campaña</span>
+
+                <div class="chart-legend-custom">
+
+                  <span class="dot bar-dot"></span> Q
+
+                  <span class="dot line-dot"></span> %
+
+                </div>
+
+              </div>
+
+              <div class="chart-box" id="chart-fundados-campana"></div>
+
+            </div>
+
+            <!-- Row 2: Matrices de resumen -->
+
+            <div class="card-matrix">
+
+              <div class="matrix-header">
+
+                <span>Reclamo por Tipo de Respuesta</span>
+
+              </div>
+
+              <div class="matrix-table-wrap">
+
+                <table class="bi-table" id="table-respuesta-mes">
+                  <colgroup>
+                    <col style="width: 25%;">
+                    <col style="width: 12%;">
+                    <col style="width: 14%;">
+                    <col style="width: 12%;">
+                    <col style="width: 12%;">
+                    <col style="width: 11%;">
+                    <col style="width: 14%;">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th class="th-main" rowspan="2">RESPUESTA<br><small>MES</small></th>
+                      <th colspan="2" class="th-sub fundado">Fundado</th>
+                      <th colspan="2" class="th-sub infundado">Infundado</th>
+                      <th colspan="2" class="th-sub total">Total</th>
+                    </tr>
+                    <tr class="sub-cols">
+                      <th>Q</th><th>%</th>
+                      <th>Q</th><th>%</th>
+                      <th>Q</th><th>%</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+
+              </div>
+
+            </div>
+
+            <div class="card-matrix">
+
+              <div class="matrix-header">
+
+                <span>Tipo de Reclamo por Mes</span>
+
+              </div>
+
+              <div class="matrix-table-wrap">
+
+                <table class="bi-table" id="table-tipo-mes">
+                  <colgroup>
+                    <col style="width: 20%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th class="th-main" rowspan="2">TIPO DE RECLAMO<br><small>MES</small></th>
+                      <th colspan="2" class="th-sub entel">Entel</th>
+                      <th colspan="2" class="th-sub indecopi">Indecopi</th>
+                      <th colspan="2" class="th-sub osiptel">Osiptel</th>
+                      <th colspan="2" class="th-sub total">Total</th>
+                    </tr>
+                    <tr class="sub-cols">
+                      <th>Q</th><th>%</th>
+                      <th>Q</th><th>%</th>
+                      <th>Q</th><th>%</th>
+                      <th>Q</th><th>%</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+
+              </div>
+
+            </div>
+
+            <div class="card-matrix">
+
+              <div class="matrix-header">
+
+                <span>Tipo de Respuesta por Supervisor</span>
+
+              </div>
+
+              <div class="matrix-table-wrap">
+
+                <table class="bi-table" id="table-respuesta-sup">
+                  <colgroup>
+                    <col style="width: 32%;">
+                    <col style="width: 11%;">
+                    <col style="width: 13%;">
+                    <col style="width: 11%;">
+                    <col style="width: 11%;">
+                    <col style="width: 10%;">
+                    <col style="width: 12%;">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th class="th-main" rowspan="2">RESPUESTA<br><small>SUPERVISOR</small></th>
+                      <th colspan="2" class="th-sub fundado">Fundado</th>
+                      <th colspan="2" class="th-sub infundado">Infundado</th>
+                      <th colspan="2" class="th-sub total">Total</th>
+                    </tr>
+                    <tr class="sub-cols">
+                      <th>Q</th><th>%</th>
+                      <th>Q</th><th>%</th>
+                      <th>Q</th><th>%</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- TAB 2: DETALLE -->
+
+        <div id="tab-detalle" class="tab-pane">
+          <div class="detalle-container">
+            <!-- SECCIÓN SUPERIOR: 3 COLUMNAS (Filtros+Cuartil | Matrices Centro | Gráficos Derecha) -->
+            <div class="detalle-top-section">
+              
+              <!-- COLUMNA 1: Filtros verticales + Cuartil -->
+              <div class="detalle-col-left">
+                <div class="detalle-filters-card">
+                  <div class="filter-group-v">
+                    <label>Campaña</label>
+                    <select id="filter-campana-detalle" class="form-select-v">
+                      <option value="ALL">Todas</option>
+                    </select>
+                  </div>
+                  <div class="filter-group-v">
+                    <label>Estado</label>
+                    <select id="filter-estado-detalle" class="form-select-v">
+                      <option value="ALL">Todas</option>
+                    </select>
+                  </div>
+                  <div class="filter-group-v">
+                    <label>Responsabilidad</label>
+                    <select id="filter-responsabilidad-detalle" class="form-select-v">
+                      <option value="ALL">Todas</option>
+                    </select>
+                  </div>
+                  <div class="filter-group-v">
+                    <label>Mes</label>
+                    <select id="filter-mes-detalle" class="form-select-v">
+                      <option value="ALL">Todas</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="card-chart card-cuartil">
+                  <div class="card-header">
+                    <span class="title">Respuesta po Cuartil</span>
+                  </div>
+                  <div class="chart-box" id="chart-cuartil"></div>
+                  <div class="chart-legend-bottom">
+                    <span><span class="legend-dot dot-fundado"></span> Fundado</span>
+                    <span><span class="legend-dot dot-infundado"></span> Infundado</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- COLUMNA 2: Matrices Centro (Responsabilidad y Detalle Mensual) -->
+              <div class="detalle-col-center">
+                <!-- Tabla 1: Reclamo por Responsabilidad -->
+                <div class="card-matrix card-resp-table">
+                  <div class="matrix-header">
+                    <span>Reclamo por Responsabilidad</span>
+                  </div>
+                  <div class="matrix-table-wrap">
+                    <table class="bi-table" id="table-responsabilidad">
+                      <colgroup>
+                        <col style="width: 34%;">
+                        <col style="width: 11%;">
+                        <col style="width: 12%;">
+                        <col style="width: 11%;">
+                        <col style="width: 11%;">
+                        <col style="width: 10%;">
+                        <col style="width: 11%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th class="th-main" rowspan="2">RESPUESTA<br><small>RESPONSABILIDAD</small></th>
+                          <th colspan="2" class="th-sub fundado">Fundado</th>
+                          <th colspan="2" class="th-sub infundado">Infundado</th>
+                          <th colspan="2" class="th-sub total">Total</th>
+                        </tr>
+                        <tr class="sub-cols">
+                          <th>Q</th><th>%</th>
+                          <th>Q</th><th>%</th>
+                          <th>Q</th><th>%</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Tabla 2: Reclamo por Tipo de Respuesta - Mensual -->
+                <div class="card-matrix card-mensual-table">
+                  <div class="matrix-header">
+                    <span>Reclamo por Tipo de Respuesta - Mensual</span>
+                  </div>
+                  <div class="matrix-table-wrap">
+                    <table class="bi-table" id="table-detalle-mensual">
+                      <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 12%;">
+                        <col style="width: 14%;">
+                        <col style="width: 12%;">
+                        <col style="width: 12%;">
+                        <col style="width: 11%;">
+                        <col style="width: 14%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th class="th-main" rowspan="2">RESPUESTA<br><small>MES</small></th>
+                          <th colspan="2" class="th-sub fundado">Fundado</th>
+                          <th colspan="2" class="th-sub infundado">Infundado</th>
+                          <th colspan="2" class="th-sub total">Total</th>
+                        </tr>
+                        <tr class="sub-cols">
+                          <th>Q</th><th>%</th>
+                          <th>Q</th><th>%</th>
+                          <th>Q</th><th>%</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- COLUMNA 3: Gráficos Derecha (Responsabilidad y Detalle Mensual) -->
+              <div class="detalle-col-right">
+                <!-- Gráfico 1: Reclamo por Responsabilidad (Barras Verticales 100%) -->
+                <div class="card-chart card-resp-chart">
+                  <div class="card-header">
+                    <span class="title">Reclamo por Responsabilidad</span>
+                  </div>
+                  <div class="chart-box" id="chart-responsabilidad"></div>
+                  <div class="chart-legend-bottom">
+                    <span><span class="legend-dot dot-fundado"></span> Fundado</span>
+                    <span><span class="legend-dot dot-infundado"></span> Infundado</span>
+                  </div>
+                </div>
+
+                <!-- Gráfico 2: Reclamo por Tipo de Respuesta - Mensual (Barras Horizontales 100%) -->
+                <div class="card-chart card-mensual-chart">
+                  <div class="card-header">
+                    <span class="title">Reclamo por Tipo de Respuesta - Mensual</span>
+                  </div>
+                  <div class="chart-box" id="chart-detalle-mensual"></div>
+                  <div class="chart-legend-bottom">
+                    <span><span class="legend-dot dot-fundado"></span> Fundado</span>
+                    <span><span class="legend-dot dot-infundado"></span> Infundado</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- SECCIÓN INFERIOR: 2 COLUMNAS (50% / 50%) -->
+            <div class="detalle-bottom-section">
+              <!-- Tabla Expandible 1: Motivo / Sub Motivo -->
+              <div class="card-matrix">
+                <div class="matrix-header">
+                  <span>Motivo - Sub Motivo del Reclamo</span>
+                </div>
+                <div class="matrix-table-wrap">
+                  <table class="bi-table" id="table-motivo-submotivo">
+                    <colgroup>
+                      <col style="width: 34%;">
+                      <col style="width: 11%;">
+                      <col style="width: 12%;">
+                      <col style="width: 11%;">
+                      <col style="width: 11%;">
+                      <col style="width: 10%;">
+                      <col style="width: 11%;">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th class="th-main" rowspan="2">RESPUESTA<br><small>MOTIVO</small></th>
+                        <th colspan="2" class="th-sub fundado">Fundado</th>
+                        <th colspan="2" class="th-sub infundado">Infundado</th>
+                        <th colspan="2" class="th-sub total">Total</th>
+                      </tr>
+                      <tr class="sub-cols">
+                        <th>Q</th><th>%</th>
+                        <th>Q</th><th>%</th>
+                        <th>Q</th><th>%</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Tabla Expandible 2: Campaña y Asesor -->
+              <div class="card-matrix">
+                <div class="matrix-header">
+                  <span>Reclamo por Campaña y Asesor</span>
+                </div>
+                <div class="matrix-table-wrap">
+                  <table class="bi-table" id="table-campana-asesor">
+                    <colgroup>
+                      <col style="width: 34%;">
+                      <col style="width: 11%;">
+                      <col style="width: 12%;">
+                      <col style="width: 11%;">
+                      <col style="width: 11%;">
+                      <col style="width: 10%;">
+                      <col style="width: 11%;">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th class="th-main" rowspan="2">RESPUESTA<br><small>CAMPAÑA</small></th>
+                        <th colspan="2" class="th-sub fundado">Fundado</th>
+                        <th colspan="2" class="th-sub infundado">Infundado</th>
+                        <th colspan="2" class="th-sub total">Total</th>
+                      </tr>
+                      <tr class="sub-cols">
+                        <th>Q</th><th>%</th>
+                        <th>Q</th><th>%</th>
+                        <th>Q</th><th>%</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- TAB 3: REINCIDENCIA -->
+
+        <div id="tab-reincidencia" class="tab-pane">
+
+          <div class="reincidencia-layout">
+
+            <!-- Barra lateral: Ver fila por -->
+
+            <aside class="sidebar-dimension">
+
+              <div class="side-header-row">
+
+                <div class="side-title">Ver fila Por:</div>
+
+                <div class="side-toolbar">
+
+                  <button type="button" id="btn-expand-all" class="btn-dim-tool" title="Expandir todo">+</button>
+
+                  <button type="button" id="btn-collapse-all" class="btn-dim-tool" title="Colapsar todo">&minus;</button>
+
+                  <button type="button" id="btn-reset-order" class="btn-dim-tool" title="Restablecer orden predeterminado">&#x21bb;</button>
+
+                </div>
+
+              </div>
+
+              <div class="side-hint">Selecciona Jerarquías y usa &uarr; &darr; para acomodar:</div>
+
+              <div class="dimension-options" id="dimension-options">
+                <div class="dim-item" data-val="CAMPANA">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="CAMPANA" checked>
+                    <span>Campaña</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="SUPERVISOR">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="SUPERVISOR" checked>
+                    <span>Supervisor</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="ASESOR">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="ASESOR">
+                    <span>Asesor</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="CUARTIL">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="CUARTIL">
+                    <span>Cuartil</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="ANTIGUEDAD">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="ANTIGUEDAD">
+                    <span>Antigüedad</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="TIPO_RECLAMO">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="TIPO_RECLAMO">
+                    <span>Tipo de Reclamo</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="RESPUESTA">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="RESPUESTA">
+                    <span>Respuesta</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="RESPONSABILIDAD">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="RESPONSABILIDAD">
+                    <span>Responsabilidad</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="MOTIVO">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="MOTIVO">
+                    <span>Motivo</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+                <div class="dim-item" data-val="SUB_MOTIVO">
+                  <label class="check-label">
+                    <input type="checkbox" class="dim-check" value="SUB_MOTIVO">
+                    <span>Sub Motivo</span>
+                  </label>
+                  <div class="dim-arrows">
+                    <button type="button" class="btn-move-up" title="Subir orden">&uarr;</button>
+                    <button type="button" class="btn-move-down" title="Bajar orden">&darr;</button>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Evolutivo Reincidencia Table -->
+            <div class="reincidencia-table-container">
+              <div class="card-matrix fill-height">
+                <div class="matrix-header">
+                  <span id="reincidencia-table-title">Evolutivo de Reincidencia Por: Campaña > Supervisor</span>
+                </div>
+                <div class="matrix-table-wrap horizontal-scroll-allowed">
+                  <table class="bi-table evolutivo-table" id="table-reincidencia-evolutivo">
+                    <thead>
+                      <!-- Header dinamico generado con los 12 meses -->
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== MOVISTAR VISTA 1: PORTADA - TRIPLETAS ==================== -->
+        <div id="tab-mov-portada" class="tab-pane">
+          <div class="mov-portada-layout">
+            <!-- Fila 1: Strip de 4 KPIs Ejecutivos -->
+            <div class="mov-kpi-strip">
+              <div class="mov-kpi-card kpi-blue">
+                <div class="mov-kpi-top">
+                  <span class="mov-kpi-label">TOTAL TRIPLETAS</span>
+                  <span class="mov-kpi-badge blue">FOLIOS</span>
+                </div>
+                <div class="mov-kpi-val" id="kpi-mov-total">0</div>
+                <div class="mov-kpi-sub" id="kpi-mov-total-sub">0 en revisión</div>
+              </div>
+
+              <div class="mov-kpi-card kpi-orange">
+                <div class="mov-kpi-top">
+                  <span class="mov-kpi-label">PROCEDENTES (FUNDADOS)</span>
+                  <span class="mov-kpi-badge red">CRÍTICO</span>
+                </div>
+                <div class="mov-kpi-val" id="kpi-mov-fundados">0 (0%)</div>
+                <div class="mov-kpi-sub" id="kpi-mov-fundados-sub">Sobre casos concluidos</div>
+              </div>
+
+              <div class="mov-kpi-card kpi-green">
+                <div class="mov-kpi-top">
+                  <span class="mov-kpi-label">DEFENDIDOS (INFUNDADOS)</span>
+                  <span class="mov-kpi-badge green">FAVORABLE</span>
+                </div>
+                <div class="mov-kpi-val" id="kpi-mov-infundados">0 (0%)</div>
+                <div class="mov-kpi-sub" id="kpi-mov-infundados-sub">Defendidos con evidencia</div>
+              </div>
+
+              <div class="mov-kpi-card kpi-red">
+                <div class="mov-kpi-top">
+                  <span class="mov-kpi-label">IMPACTO PENALIDAD (F3)</span>
+                  <span class="mov-kpi-badge amber" id="kpi-mov-penalizados">0 casos</span>
+                </div>
+                <div class="mov-kpi-val" id="kpi-mov-monto">$ 0 MXN</div>
+                <div class="mov-kpi-sub">Penalización acumulada</div>
+              </div>
+            </div>
+
+            <!-- Fila 2: 3 Gráficos Interactivos ECharts -->
+            <div class="mov-charts-row">
+              <div class="card-chart">
+                <div class="card-header">
+                  <span class="title" id="title-chart-mov-mes">Evolutivo Mensual de Tripletas (Q y % Fund.)</span>
+                  <div class="mov-chart-toggle" id="toggle-chart-mov-mes">
+                    <button type="button" class="mov-chart-btn active" data-type="TRIPLETAS">Tripletas</button>
+                    <button type="button" class="mov-chart-btn" data-type="REVERSAS">Reversas</button>
+                  </div>
+                </div>
+                <div class="chart-box" id="chart-mov-mes"></div>
+              </div>
+
+              <div class="card-chart">
+                <div class="card-header">
+                  <span class="title">Top Motivos de Queja en Particular</span>
+                </div>
+                <div class="chart-box" id="chart-mov-quejas"></div>
+              </div>
+
+              <div class="card-chart">
+                <div class="card-header">
+                  <span class="title">Top 10 Centros de Atención (CAC / Plazas)</span>
+                  <div class="chart-legend-custom">
+                    <span class="dot bar-dot"></span> Q
+                    <span class="dot line-dot"></span> % Fund.
+                  </div>
+                </div>
+                <div class="chart-box" id="chart-mov-cac"></div>
+              </div>
+            </div>
+
+            <!-- Fila 3: 3 Matrices Operativas Compactas -->
+            <div class="mov-tables-row">
+              <!-- Matriz 1: Resumen Mensual y Penalidad -->
+              <div class="card-matrix">
+                <div class="matrix-header">
+                  <span>Conclusión y Penalidad por Mes</span>
+                </div>
+                <div class="matrix-table-wrap">
+                  <table class="bi-table" id="table-mov-mes">
+                    <thead>
+                      <tr>
+                        <th class="th-main" rowspan="2">CONCLUSIÓN<br><small>MES VENTA</small></th>
+                        <th colspan="2" class="th-sub fundado">Fundado</th>
+                        <th class="th-sub infundado">Infund.</th>
+                        <th class="th-sub">Pend.</th>
+                        <th class="th-sub">Penalidad</th>
+                        <th class="th-sub total">Total</th>
+                      </tr>
+                      <tr class="sub-cols">
+                        <th>Q</th><th>%</th>
+                        <th>Q</th>
+                        <th>Q</th>
+                        <th>$ MXN</th>
+                        <th>Q</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Matriz 2: Cumplimiento de Protocolo por Supervisor > Asesor -->
+              <div class="card-matrix">
+                <div class="matrix-header">
+                  <span>Evaluación de Protocolo: Supervisor &gt; Asesor</span>
+                </div>
+                <div class="matrix-table-wrap">
+                  <table class="bi-table" id="table-mov-region-cac">
+                    <thead>
+                      <tr>
+                        <th class="th-main" rowspan="2">SUPERVISOR<br><small>ASESOR</small></th>
+                        <th class="th-sub" title="Indica oferta comercial correcta">Indica oferta<br>comercial correcta</th>
+                        <th class="th-sub" title="Confirma si el equipo está liberado">Confirma equipo<br>liberado</th>
+                        <th class="th-sub" title="Menciona Aviso de Privacidad">Menciona Aviso<br>de Privacidad</th>
+                        <th class="th-sub" title="Solicita autorización de CURP">Solicita aut.<br>de CURP</th>
+                        <th class="th-sub total">TOTAL</th>
+                      </tr>
+                      <tr class="sub-cols">
+                        <th>SI (%)</th>
+                        <th>SI (%)</th>
+                        <th>SI (%)</th>
+                        <th>SI (%)</th>
+                        <th>Q</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Matriz 3: Supervisor > Asesor -->
+              <div class="card-matrix">
+                <div class="matrix-header">
+                  <span>Supervisor &gt; Asesor de Venta (Tripletas)</span>
+                </div>
+                <div class="matrix-table-wrap">
+                  <table class="bi-table" id="table-mov-sup-asesor">
+                    <thead>
+                      <tr>
+                        <th class="th-main" rowspan="2">SUPERVISOR<br><small>ASESOR VENTA</small></th>
+                        <th colspan="2" class="th-sub fundado">Fundado</th>
+                        <th class="th-sub infundado">Infund.</th>
+                        <th class="th-sub">Monto</th>
+                        <th class="th-sub total">Total</th>
+                      </tr>
+                      <tr class="sub-cols">
+                        <th>Q</th><th>%</th>
+                        <th>Q</th>
+                        <th>$ MXN</th>
+                        <th>Q</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== MOVISTAR VISTA 2: REVERSAS & MATRIZ JERÁRQUICA ==================== -->
+        <div id="tab-mov-reversas" class="tab-pane">
+          <div class="mov-reversas-layout">
+            <!-- Mitad Superior: Panel Ejecutivo de Reversas (KPIs + Donador + Vendor Point + Tabla) -->
+            <div class="mov-rev-top">
+              <!-- Columna 1: 4 Mini-KPIs de Reversas (2x2) -->
+              <div class="mov-rev-kpi-grid">
+                <div class="mov-mini-kpi">
+                  <span class="mk-label">TOTAL REVERSAS</span>
+                  <span class="mk-val blue" id="kpi-rev-total">0</span>
+                  <span class="mk-sub">Portabilidad TMKT</span>
+                </div>
+                <div class="mov-mini-kpi">
+                  <span class="mk-label">DEFENDIDAS (INFUND.)</span>
+                  <span class="mk-val green" id="kpi-rev-infundados">0 (100%)</span>
+                  <span class="mk-sub">Audio de aceptación OK</span>
+                </div>
+                <div class="mov-mini-kpi">
+                  <span class="mk-label">PROCEDENTES / APLICA</span>
+                  <span class="mk-val orange" id="kpi-rev-fundados">0 Fund.</span>
+                  <span class="mk-sub">Evaluación de audio</span>
+                </div>
+                <div class="mov-mini-kpi">
+                  <span class="mk-label">MONTO PENALIZADO</span>
+                  <span class="mk-val slate" id="kpi-rev-monto">$ 0 MXN</span>
+                  <span class="mk-sub">Impacto en Reversas</span>
+                </div>
+              </div>
+
+              <!-- Columna 2: Gráfico Reversas por Operador Donador -->
+              <div class="card-chart">
+                <div class="card-header">
+                  <span class="title">Reversas por Operador Donador</span>
+                </div>
+                <div class="chart-box" id="chart-mov-rev-donador"></div>
+              </div>
+
+              <!-- Columna 3: Gráfico Reversas por Punto de Venta (Vendor Point) -->
+              <div class="card-chart">
+                <div class="card-header">
+                  <span class="title">Reversas por Punto Venta (ID_VENDOR_POINT)</span>
+                </div>
+                <div class="chart-box" id="chart-mov-rev-vendor"></div>
+              </div>
+
+              <!-- Columna 4: Tabla Resumen Reversas por Supervisor y Donador -->
+              <div class="card-matrix">
+                <div class="matrix-header">
+                  <span>Reversas por Supervisor y Donador</span>
+                </div>
+                <div class="matrix-table-wrap">
+                  <table class="bi-table" id="table-mov-rev-sup">
+                    <thead>
+                      <tr>
+                        <th class="th-main">SUPERVISOR</th>
+                        <th class="th-sub">Telcel</th>
+                        <th class="th-sub">Altan</th>
+                        <th class="th-sub">AT&amp;T</th>
+                        <th class="th-sub infundado">Infund.</th>
+                        <th class="th-sub total">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mitad Inferior: Explorador de Matriz Jerárquica Dinámica (Tripletas / Reversas) -->
+            <div class="mov-rev-bottom">
+              <aside class="sidebar-dimension mov-sidebar">
+                <div class="mov-source-switch">
+                  <button type="button" class="mov-src-btn active" data-src="TRIPLETAS">Base Tripletas</button>
+                  <button type="button" class="mov-src-btn" data-src="REVERSAS">Base Reversas</button>
+                </div>
+                <div class="side-header-row">
+                  <div class="side-title">Ver fila Por:</div>
+                  <div class="side-toolbar">
+                    <button type="button" id="btn-mov-expand-all" class="btn-dim-tool" title="Expandir todo">+</button>
+                    <button type="button" id="btn-mov-collapse-all" class="btn-dim-tool" title="Colapsar todo">&minus;</button>
+                    <button type="button" id="btn-mov-reset-order" class="btn-dim-tool" title="Restablecer orden">&#x21bb;</button>
+                  </div>
+                </div>
+                <div class="dimension-options" id="mov-dimension-options">
+                  <div class="dim-item" data-val="SUPERVISOR">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="SUPERVISOR" checked><span>Supervisor</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                  <div class="dim-item" data-val="ASESOR">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="ASESOR" checked><span>Asesor</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                  <div class="dim-item" data-val="REGION">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="REGION"><span>Región / Donador</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                  <div class="dim-item" data-val="CAC">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="CAC"><span>CAC / Punto Venta</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                  <div class="dim-item" data-val="QUEJA">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="QUEJA"><span>Queja / Audio</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                  <div class="dim-item" data-val="PLAN">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="PLAN"><span>Plan / Distribuidor</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                  <div class="dim-item" data-val="ANTIGUEDAD">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="ANTIGUEDAD"><span>Antigüedad</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                  <div class="dim-item" data-val="ESTADO">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="ESTADO"><span>Estado Asesor</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                  <div class="dim-item" data-val="CONCLUSION">
+                    <label class="check-label"><input type="checkbox" class="mov-dim-check" value="CONCLUSION"><span>Conclusión</span></label>
+                    <div class="dim-arrows"><button type="button" class="btn-move-up">&uarr;</button><button type="button" class="btn-move-down">&darr;</button></div>
+                  </div>
+                </div>
+              </aside>
+
+              <div class="reincidencia-table-container">
+                <div class="card-matrix fill-height">
+                  <div class="matrix-header">
+                    <span id="mov-evolutivo-title">Matriz Jerárquica (TRIPLETAS): Supervisor &gt; Asesor</span>
+                  </div>
+                  <div class="matrix-table-wrap horizontal-scroll-allowed">
+                    <table class="bi-table evolutivo-table" id="table-mov-evolutivo">
+                      <thead></thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+  <!-- Scripts Bundle (Compatible con file:// y http://) -->
+  <script src="js/bundle.js?v=639294239511884802"></script>
+</body>
+</html>
+
